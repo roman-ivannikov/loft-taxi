@@ -1,11 +1,49 @@
+import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import LoginPage from './components/LoginPage';
+import MapPage from './components/MapPage';
+import ProfilePage from './components/ProfilePage';
 
-function App() {
-  return (
-    <LoginPage/>
-  );
+class App extends React.Component {
+  constructor( props ) {
+    super( props );
+    this.state = { currentPage: 'MapPage' };
+    this.changePage = this.changePage.bind( this );
+    
+  }
+  
+  navItems = [
+    { text:'Карта', page:'MapPage' },
+    { text:'Профиль', page:'ProfilePage' },
+    { text:'Войти', page:'LoginPage' }
+  ];
+
+  changePage( newPage ) {
+    this.setState( { currentPage: newPage } );
+  }
+
+  showPage = () => {
+    switch (this.state.currentPage) {
+      case 'MapPage':
+        return <MapPage/>
+      case 'ProfilePage':
+        return <ProfilePage/>
+        case 'LoginPage':
+          return <LoginPage/>
+      default:
+        return null
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage}/>
+        <this.showPage/>
+      </>
+    )
+  }
 }
 
 export default App;
