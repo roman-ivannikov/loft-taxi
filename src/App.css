@@ -10,7 +10,8 @@ body {
   font-style: normal;
 }
 
-button {
+button,
+.form__submit {
   padding: 0;
   border: none;
   font: inherit;
@@ -70,7 +71,7 @@ button {
 
 .page {
   background-color: #fdbf5a40;
-  padding: 30vh 0;
+  padding: 15vh 0;
 }
 
 .form {
@@ -83,6 +84,7 @@ button {
   padding-bottom: 55px;
   padding-left: 112px;
   padding-right: 112px;
+  
 }
 
 .form__title {
@@ -98,10 +100,55 @@ button {
   line-height: 18.75px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 11px;
+  border-bottom: 2px solid #E4E4E4;
 }
 
 .form label:not(:last-child) {
   margin-bottom: 25px;
+}
+
+.form__input {
+  font-size: 18px;
+  line-height: 21px;
+  color: #828282;
+  border: none;
+  margin-top: 10px;
+}
+
+.form__input:focus-visible {
+  outline-color: transparent;
+}
+
+.form__forgot {
+  line-height: 19px;
+  color: #828282;
+  margin-top: 13px;
+  text-align: right;
+  margin-left: auto;
+}
+
+.form__submit {
+  display: block;
+  margin-top: 46px;
+  height: 61px;
+  width: 100%;
+  font-size: 25px;
+  line-height: 29px;
+  background: #FDBF5A;
+  border-radius: 70px;
+  color: #000000;
+}
+
+.form__other {
+  line-height: 19px;
+  color: #828282;
+  margin-top: 33px;
+  text-align: center;
+}
+
+.form__other > button {
+  color: #FDBF5A;
 }
 
 

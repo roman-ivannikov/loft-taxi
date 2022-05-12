@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import LoginPage from './components/LoginPage';
+import RegistrationPage from './components/RegistrationPage';
 import MapPage from './components/MapPage';
 import ProfilePage from './components/ProfilePage';
 
@@ -28,8 +29,10 @@ class App extends React.Component {
         return <MapPage/>
       case 'ProfilePage':
         return <ProfilePage/>
-        case 'LoginPage':
-          return <LoginPage/>
+      case 'LoginPage':
+        return <LoginPage changePage={this.changePage.bind(this)} />
+      case 'RegistrationPage':
+          return <RegistrationPage changePage={this.changePage.bind(this)}/>
       default:
         return null
     }
