@@ -1,11 +1,6 @@
 import React from "react";
 
 class Nav extends React.Component {
-    constructor( props ) {
-        super( props );
-        this.handleClick = this.handleClick.bind( this );
-    }
-
     handleClick(e) {
         this.props.changePage( e.target.dataset.href );
     }
@@ -15,7 +10,7 @@ class Nav extends React.Component {
         if ( page === this.props.currentPage ) {
             classItem += ' nav__item_active';
         }
-        return <button type="button" className={classItem} data-href={page} onClick={this.handleClick}>{text}</button>;
+        return <button type="button" className={classItem} data-href={page} onClick={this.handleClick.bind(this)}>{text}</button>;
     }
 
     render() {

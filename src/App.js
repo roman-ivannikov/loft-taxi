@@ -9,7 +9,6 @@ class App extends React.Component {
   constructor( props ) {
     super( props );
     this.state = { currentPage: 'MapPage' };
-    this.changePage = this.changePage.bind( this );
     
   }
   
@@ -24,7 +23,7 @@ class App extends React.Component {
   }
 
   showPage = () => {
-    switch (this.state.currentPage) {
+     switch (this.state.currentPage) {
       case 'MapPage':
         return <MapPage/>
       case 'ProfilePage':
@@ -39,7 +38,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage}/>
+        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage.bind(this)}/>
         <this.showPage/>
       </>
     )
