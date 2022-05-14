@@ -14,9 +14,15 @@ class Nav extends React.Component {
     }
 
     render() {
+        let items = []
+        for (let key in this.props.pages) {
+            if (this.props.pages[key][2] !== false) {
+                items.push({ 'page': key, 'text': this.props.pages[key][0] } )
+            }
+        }
         return (
             <nav className="header__nav nav">
-                {this.props.navItems.map( item => (
+                {items.map( item => (
                     <this.NavItem key={item.page} text={item.text} page={item.page}/>
                 ))}
             </nav>

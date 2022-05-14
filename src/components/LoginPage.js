@@ -12,11 +12,11 @@ class LoginPage extends React.Component {
     
     handleSubmit = event => {
         event.preventDefault();
-        this.props.changePage('MapPage');
+        this.props.changePage('map');
     }
 
     handleOther = event => {
-        this.props.changePage('RegistrationPage');
+        this.props.changePage('registration');
     }
 
     render() {
@@ -31,12 +31,12 @@ class LoginPage extends React.Component {
                                 <label>
                                     Email:
                                     <input
-                                    type="text"
+                                    type="email"
                                     value={userEmail}
                                     name="userEmail"
                                     onChange={this.handleChange}
                                     className="form__input"
-                                    autoComplete="username"
+                                    autoComplete="email"
                                     required
                                     />
                                 </label>

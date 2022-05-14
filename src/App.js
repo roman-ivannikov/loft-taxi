@@ -6,43 +6,30 @@ import RegistrationPage from './components/RegistrationPage';
 import MapPage from './components/MapPage';
 import ProfilePage from './components/ProfilePage';
 
+
 class App extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = { currentPage: 'MapPage' };
-    
+  state = { currentPage: 'map' };
+
+  changePage = ( page ) => {
+    this.setState( { currentPage: page } );
+  }
+
+  listPages = {
+    map: ['Карта', <MapPage/>],
+    profile: ['Профиль', <ProfilePage/>],
+    login: ['Войти', <LoginPage changePage={this.changePage}/>],
+    registration: ['Регистрация', <RegistrationPage changePage={this.changePage}/>, false]
   }
   
-  navItems = [
-    { text:'Карта', page:'MapPage' },
-    { text:'Профиль', page:'ProfilePage' },
-    { text:'Войти', page:'LoginPage' }
-  ];
-
-  changePage( newPage ) {
-    this.setState( { currentPage: newPage } );
-  }
-
-  showPage = () => {
-     switch (this.state.currentPage) {
-      case 'MapPage':
-        return <MapPage/>
-      case 'ProfilePage':
-        return <ProfilePage/>
-      case 'LoginPage':
-        return <LoginPage changePage={this.changePage.bind(this)} />
-      case 'RegistrationPage':
-          return <RegistrationPage changePage={this.changePage.bind(this)}/>
-      default:
-        return null
-    }
-  }
-
   render() {
     return (
       <>
-        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage.bind(this)}/>
-        <this.showPage/>
+        <Header pages={this.listPages} currentPage={this.state.currentPage} changePage={this.changePage}/>
+        <main>
+          <section>
+            {this.listPages[this.state.currentPage][1]}
+          </section>
+        </main>
       </>
     )
   }
