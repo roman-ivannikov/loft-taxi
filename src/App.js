@@ -7,10 +7,10 @@ import MapPage from './components/MapPage';
 import ProfilePage from './components/ProfilePage';
 
 const listPages = {
-  map: { name: 'Карта', component: <MapPage/>, showInMenu: true },
-  profile: { name: 'Профиль', component: <ProfilePage/>, showInMenu: true },
-  login: { name: 'Войти', component: <LoginPage />, showInMenu: true },
-  registration: { name: 'Регистрация', component: <RegistrationPage />, showInMenu: false },
+  map: { name: 'Карта', component: MapPage, showInMenu: true },
+  profile: { name: 'Профиль', component: ProfilePage, showInMenu: true },
+  login: { name: 'Войти', component: LoginPage, showInMenu: true },
+  registration: { name: 'Регистрация', component: RegistrationPage, showInMenu: false },
 }
 
 const menuItems = [];
