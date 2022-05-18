@@ -28,7 +28,7 @@ class App extends React.Component {
   };
 
   render() {
-    const Page = () => listPages[ this.state.currentPage ].component;
+    const Page = listPages[ this.state.currentPage ].component;
     
     return (
       <>
