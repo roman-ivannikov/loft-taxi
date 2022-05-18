@@ -12,11 +12,11 @@ class LoginPage extends React.Component {
     
     handleSubmit = event => {
         event.preventDefault();
-        this.props.changePage('map');
+        this.props.goToPage('map');
     }
 
-    handleOther = event => {
-        this.props.changePage('registration');
+    handleRegistartion = event => {
+        this.props.goToPage('registration');
     }
 
     render() {
@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
                             <div className="form__forgot">Забыли пароль?</div>
                             <input className="form__submit" type="submit" value="Войти" />
                         </form>
-                        <div className="form__other">Новый пользователь? <button onClick={this.handleOther}>Регистрация</button></div>
+                        <div className="form__other">Новый пользователь? <button onClick={this.handleRegistartion}>Регистрация</button></div>
                     </div>
                 </div>
             </div>

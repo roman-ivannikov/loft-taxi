@@ -8,27 +8,42 @@ import ProfilePage from './components/ProfilePage';
 
 
 class App extends React.Component {
-  state = { currentPage: 'map' };
+  constructor( props ) {
+    super( props );
+    this.state = { currentPage: 'map' };
 
-  changePage = ( page ) => {
+    this.listPages = {
+      map: { name: 'Карта', component: <MapPage/>, showInMenu: true },
+      profile: { name: 'Профиль', component: <ProfilePage/>, showInMenu: true },
+      login: { name: 'Войти', component: <LoginPage goToPage={this.goToPage} />, showInMenu: true },
+      registration: { name: 'Регистрация', component: <RegistrationPage goToPage={this.goToPage} />, showInMenu: false },
+    };
+
+    const menuItems = [];
+    for (let key in this.listPages) {
+        if (this.listPages[key].showInMenu !== false) {
+          menuItems.push({ 'page': key, 'text': this.listPages[key].name } )
+        }
+    };
+    this.menuItems = menuItems;
+  }
+
+  Page = () => (
+    <section>
+      { this.listPages[ this.state.currentPage ].component }
+    </section>
+  );
+
+  goToPage = ( page ) => {
     this.setState( { currentPage: page } );
-  }
+  };
 
-  listPages = {
-    map: ['Карта', <MapPage/>],
-    profile: ['Профиль', <ProfilePage/>],
-    login: ['Войти', <LoginPage changePage={this.changePage}/>],
-    registration: ['Регистрация', <RegistrationPage changePage={this.changePage}/>, false]
-  }
-  
   render() {
     return (
       <>
-        <Header pages={this.listPages} currentPage={this.state.currentPage} changePage={this.changePage}/>
+        <Header pages={this.menuItems} currentPage={this.state.currentPage} goToPage={this.goToPage}/>
         <main>
-          <section>
-            {this.listPages[this.state.currentPage][1]}
-          </section>
+          <this.Page/>
         </main>
       </>
     )
