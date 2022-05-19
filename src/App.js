@@ -6,43 +6,38 @@ import RegistrationPage from './components/RegistrationPage';
 import MapPage from './components/MapPage';
 import ProfilePage from './components/ProfilePage';
 
-class App extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = { currentPage: 'MapPage' };
-    
-  }
-  
-  navItems = [
-    { text:'Карта', page:'MapPage' },
-    { text:'Профиль', page:'ProfilePage' },
-    { text:'Войти', page:'LoginPage' }
-  ];
+const listPages = {
+  map: { name: 'Карта', component: MapPage, showInMenu: true },
+  profile: { name: 'Профиль', component: ProfilePage, showInMenu: true },
+  login: { name: 'Войти', component: LoginPage, showInMenu: true },
+  registration: { name: 'Регистрация', component: RegistrationPage, showInMenu: false },
+}
 
-  changePage( newPage ) {
-    this.setState( { currentPage: newPage } );
-  }
-
-  showPage = () => {
-     switch (this.state.currentPage) {
-      case 'MapPage':
-        return <MapPage/>
-      case 'ProfilePage':
-        return <ProfilePage/>
-      case 'LoginPage':
-        return <LoginPage changePage={this.changePage.bind(this)} />
-      case 'RegistrationPage':
-          return <RegistrationPage changePage={this.changePage.bind(this)}/>
-      default:
-        return null
+const menuItems = [];
+for (let key in listPages) {
+    if (listPages[key].showInMenu !== false) {
+      menuItems.push({ 'page': key, 'text': listPages[key].name } )
     }
-  }
+};
+
+class App extends React.Component {
+  state = { currentPage: 'map' };
+
+  goToPage = ( page ) => {
+    this.setState( { currentPage: page } );
+  };
 
   render() {
+    const Page = listPages[ this.state.currentPage ].component;
+    
     return (
       <>
-        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage.bind(this)}/>
-        <this.showPage/>
+        <Header pages={menuItems} currentPage={this.state.currentPage} goToPage={this.goToPage}/>
+        <main>
+          <section>
+            <Page goToPage={this.goToPage} />
+          </section>
+        </main>
       </>
     )
   }
