@@ -1,4 +1,5 @@
 import React from "react";
+import Button from '@mui/material/Button';
 
 class Nav extends React.Component {
     handleClick = (e) => {
@@ -6,11 +7,15 @@ class Nav extends React.Component {
     }
 
     NavItem = ({ page, text }) => {
-        let classItem = 'nav__item';
-        if ( page === this.props.currentPage ) {
-            classItem += ' nav__item_active';
-        }
-        return <button type="button" className={classItem} data-href={page} onClick={this.handleClick}>{text}</button>;
+        return (
+            <Button
+                className="nav__item"
+                data-href={page}
+                onClick={this.handleClick}
+                color={page === this.props.currentPage ? "secondary" : "primary"}
+            >{text}
+            </Button>
+        )
     }
 
     render() {
