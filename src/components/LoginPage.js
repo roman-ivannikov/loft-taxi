@@ -12,6 +12,7 @@ class LoginPage extends React.Component {
     
     handleSubmit = event => {
         event.preventDefault();
+        this.props.logIn(this.state);
         this.props.goToPage('map');
     }
 
@@ -62,7 +63,6 @@ class LoginPage extends React.Component {
             </div>
         )
     } 
-
 }
 
 

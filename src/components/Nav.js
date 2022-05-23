@@ -1,5 +1,6 @@
 import React from "react";
 import Button from '@mui/material/Button';
+import PropTypes from 'prop-types';
 
 class Nav extends React.Component {
     handleClick = (e) => {
@@ -19,6 +20,10 @@ class Nav extends React.Component {
     }
 
     render() {
+        this.NavItem.propTypes = {
+            text: PropTypes.string,
+            page: PropTypes.string
+        }
         return (
             <nav className="header__nav nav">
                 {this.props.pages.map( item => (
@@ -27,6 +32,12 @@ class Nav extends React.Component {
             </nav>
         );
     }
+}
+
+Nav.propTypes = {
+    currentPage: PropTypes.string,
+    goToPage: PropTypes.func,
+    pages: PropTypes.array
 }
 
 export default Nav;
