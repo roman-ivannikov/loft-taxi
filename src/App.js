@@ -10,7 +10,7 @@ const listPages = {
   map: { name: 'Карта', component: MapPage, showInMenu: true },
   profile: { name: 'Профиль', component: ProfilePage, showInMenu: true },
   login: { name: 'Войти', component: LoginPage, showInMenu: true },
-  registration: { name: 'Регистрация', component: RegistrationPage, showInMenu: false },
+  registration: { name: 'Регистрация', component: RegistrationPage, showInMenu: false }
 }
 
 const menuItems = [];
@@ -24,7 +24,7 @@ for (let key in listPages) {
     }
 };
 
-const { Provider, Consumer } = React.createContext();
+const Authorization = React.createContext();
 
 class App extends React.Component {
   state = { 
@@ -46,6 +46,9 @@ class App extends React.Component {
   };
 
   logout = () => {
+    if (loginItemIndex !== null) {
+      menuItems[loginItemIndex].text = 'Войти';
+    }
     this.setState({ isLoggedIn: false });
     this.setState ({ currentUser: null })
   };
@@ -58,20 +61,33 @@ class App extends React.Component {
     };
     
     return (
-      <Provider value={{
+      <Authorization.Provider value={{
         isLoggedIn: this.state.isLoggedIn,
         logIn: this.login,
         logOut: this.logout
       }}>
-        <Header pages={menuItems} currentPage={this.state.currentPage} goToPage={this.goToPage}/>
+        <Authorization.Consumer>
+          {(value) => <Header 
+              pages={menuItems}
+              currentPage={this.state.currentPage}
+              goToPage={this.goToPage}
+              isLoggedIn={value.isLoggedIn}
+              logOut={value.logOut}
+          />}
+        </Authorization.Consumer>
+        
         <main>
           <section>
-            <Consumer>
-              {(value) => <Page goToPage={this.goToPage} isLoggedIn={value.isLoggedIn} logIn={value.logIn} logOut={value.logOut}/>}
-            </Consumer>
+            <Authorization.Consumer>
+              {(value) => <Page
+                goToPage={this.goToPage}
+                isLoggedIn={value.isLoggedIn}
+                logIn={value.logIn}
+              />}
+            </Authorization.Consumer>
           </section>
         </main>
-      </Provider>
+      </Authorization.Provider>
     )
   }
 }

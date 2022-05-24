@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 
 class Nav extends React.Component {
     handleClick = (e) => {
-        this.props.goToPage( e.target.dataset.href );
+        if (this.props.isLoggedIn && e.target.dataset.href === 'login') {
+            this.props.logOut();
+            this.props.goToPage( this.props.currentPage );
+        } else {
+            this.props.goToPage( e.target.dataset.href );
+        }
     }
 
     NavItem = ({ page, text }) => {

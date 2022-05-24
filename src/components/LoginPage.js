@@ -1,10 +1,7 @@
 import React from 'react';
 
 class LoginPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { userEmail: '', userPassword: '' };
-    }
+    state = { userEmail: '', userPassword: '' };
     
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });

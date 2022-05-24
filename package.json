@@ -7,7 +7,6 @@
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.8.0",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "loft-taxi-mui-theme": "^1.2.0",
     "mapbox-gl": "^2.8.2",
@@ -41,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^13.2.0",
     "@types/mapbox-gl": "^2.7.2",
     "prop-types": "^15.8.1"
   }
