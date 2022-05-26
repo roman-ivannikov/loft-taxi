@@ -1,8 +1,16 @@
 import React from 'react';
-import AccessDenied from './AccessDenied';
+import { withAuth } from './AuthContext';
+import Button from '@mui/material/Button';
 
-const ProfilePage = ({ isLoggedIn }) => {
-    return isLoggedIn ? <h1>Profile Page</h1> : <AccessDenied/>;
+class ProfilePage extends React.Component {
+    unauthenticated = () => {
+        this.props.logOut();
+        this.props.goToPage('login');
+    }
+
+    render() {
+        return <p>Это ваш Профиль.<br /><Button onClick={this.unauthenticated}>Выйти</Button></p>;
+    }
 }
 
-export default ProfilePage;
+export const ProfilePageWithAuth = withAuth(ProfilePage);

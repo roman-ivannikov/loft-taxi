@@ -1,95 +1,56 @@
 import React from 'react';
 import Header from './components/Header';
-import LoginPage from './components/LoginPage';
+import { LoginPageWithAuth } from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
 import MapPage from './components/MapPage';
-import ProfilePage from './components/ProfilePage';
-import PropTypes from 'prop-types';
+import { ProfilePageWithAuth } from './components/ProfilePage';
+// import 'mapbox-gl/dist/mapbox-gl.css';
+import { withAuth } from './components/AuthContext';
 
-const listPages = {
-  map: { name: 'Карта', component: MapPage, showInMenu: true },
-  profile: { name: 'Профиль', component: ProfilePage, showInMenu: true },
-  login: { name: 'Войти', component: LoginPage, showInMenu: true },
-  registration: { name: 'Регистрация', component: RegistrationPage, showInMenu: false }
+const pages = {
+  map: { name: 'Карта', component: (props) => <MapPage {...props} />, showInMenu: true, isPrivate: true },
+  profile: { name: 'Профиль', component: (props) => <ProfilePageWithAuth {...props} />, showInMenu: true, isPrivate: true },
+  login: { name: 'Войти', component: (props) => <LoginPageWithAuth {...props} />, showInMenu: true },
+  registration: { name: 'Регистрация', component: (props) => <RegistrationPage {...props} />, showInMenu: false }
 }
 
 const menuItems = [];
-let loginItemIndex = null;
-for (let key in listPages) {
-    if (listPages[key].showInMenu !== false) {
-      menuItems.push({ 'page': key, 'text': listPages[key].name } );
-      if ( loginItemIndex === null  && key === 'login' ) {
-        loginItemIndex = menuItems.length - 1;
-      }
+for (let key in pages) {
+    if (pages[key].showInMenu !== false) {
+      menuItems.push({ 'page': key, 'text': pages[key].name } );
     }
 };
 
-const Authorization = React.createContext();
-
 class App extends React.Component {
   state = { 
-    currentPage: 'map',
-    isLoggedIn: false,
-    currentUser: null
+    currentPage: 'login'
   };
 
   goToPage = ( page ) => {
-    this.setState( {currentPage: page} );
-  };
-
-  login = ({ userEmail, userPassword }) => {
-    if (loginItemIndex !== null) {
-      menuItems[loginItemIndex].text = 'Выйти';
+    const isPrivatePage = pages[page].isPrivate ? true : false;
+    if ( (isPrivatePage && this.props.isLoggedIn) || (!isPrivatePage) ) {
+      this.setState({ currentPage: page })
+    } else {
+      this.setState({ currentPage: 'login' })
     }
-    this.setState({ isLoggedIn: true });
-    this.setState ({ currentUser: userEmail })
-  };
-
-  logout = () => {
-    if (loginItemIndex !== null) {
-      menuItems[loginItemIndex].text = 'Войти';
-    }
-    this.setState({ isLoggedIn: false });
-    this.setState ({ currentUser: null })
   };
 
   render() {
-    const Page = listPages[ this.state.currentPage ].component;
-
-    Page.propTypes = {
-      goToPage: PropTypes.func
-    };
-    
     return (
-      <Authorization.Provider value={{
-        isLoggedIn: this.state.isLoggedIn,
-        logIn: this.login,
-        logOut: this.logout
-      }}>
-        <Authorization.Consumer>
-          {(value) => <Header 
-              pages={menuItems}
-              currentPage={this.state.currentPage}
-              goToPage={this.goToPage}
-              isLoggedIn={value.isLoggedIn}
-              logOut={value.logOut}
-          />}
-        </Authorization.Consumer>
-        
-        <main>
-          <section>
-            <Authorization.Consumer>
-              {(value) => <Page
-                goToPage={this.goToPage}
-                isLoggedIn={value.isLoggedIn}
-                logIn={value.logIn}
-              />}
-            </Authorization.Consumer>
-          </section>
-        </main>
-      </Authorization.Provider>
+        <>
+          <Header 
+              menuItems={ menuItems }
+              currentPage={ this.state.currentPage }
+              goToPage={ this.goToPage }
+          />
+          <main>
+            <section>
+                { pages[this.state.currentPage].component({ goToPage: this.goToPage }) }
+            </section>
+          </main>
+        </>
     )
   }
 }
 
-export default App;
+export default withAuth(App);
