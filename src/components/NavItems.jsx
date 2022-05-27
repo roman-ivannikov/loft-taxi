@@ -2,7 +2,7 @@ import React from "react";
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 
-class NavItem extends React.Component {
+export class NavItem extends React.Component {
     handleClick = (e) => {
         const target = e.target.dataset.href;
         this.props.goToPage(target);
@@ -29,5 +29,3 @@ NavItem.propTypes = {
     page: PropTypes.string,
     color: PropTypes.string
 }
-
-export default NavItem;

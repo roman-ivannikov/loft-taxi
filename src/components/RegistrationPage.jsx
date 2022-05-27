@@ -1,6 +1,6 @@
 import React from 'react';
 
-class RegistrationPage extends React.Component {
+export class RegistrationPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { userEmail: '', userName: '', userPassword: '' };
@@ -75,7 +75,3 @@ class RegistrationPage extends React.Component {
     } 
 
 }
-
-
-export default RegistrationPage;
-

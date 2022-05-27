@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from './components/Header';
 import { LoginPageWithAuth } from './components/LoginPage';
-import RegistrationPage from './components/RegistrationPage';
-import MapPage from './components/MapPage';
+import { RegistrationPage } from './components/RegistrationPage';
+import { MapPage } from './components/MapPage';
 import { ProfilePageWithAuth } from './components/ProfilePage';
 // import 'mapbox-gl/dist/mapbox-gl.css';
 import { withAuth } from './components/AuthContext';
@@ -21,7 +21,7 @@ for (let key in pages) {
     }
 };
 
-class App extends React.Component {
+class AppClass extends React.Component {
   state = { 
     currentPage: 'login'
   };
@@ -33,6 +33,8 @@ class App extends React.Component {
     } else {
       this.setState({ currentPage: 'login' })
     }
+
+    // this.setState({ currentPage: page })
   };
 
   render() {
@@ -53,4 +55,4 @@ class App extends React.Component {
   }
 }
 
-export default withAuth(App);
+export const App =  withAuth(AppClass);

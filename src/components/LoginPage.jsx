@@ -23,7 +23,7 @@ class LoginPage extends React.Component {
 
     render() {
         if (this.props.isLoggedIn) {
-            return <p>Вы уже залогинились!<br />Чтобы выйти, перейдите в Профиль.</p>
+            return <p>Вы залогинились!<br />Для выхода, перейдите в Профиль.</p>
         } else {
             const { userEmail, userPassword } = this.state;
             return (
