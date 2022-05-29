@@ -1,10 +1,7 @@
 import React from 'react';
 
 export class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { userEmail: '', userName: '', userPassword: '' };
-    }
+    state = { userEmail: '', userName: '', userPassword: '' };
     
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
@@ -12,10 +9,10 @@ export class RegistrationPage extends React.Component {
     
     handleSubmit = event => {
         event.preventDefault();
-        this.props.goToPage('map');
+        this.props.goToPage('login');
     }
 
-    handleLogin = event => {
+    handleLogin = () => {
         this.props.goToPage('login');
     }
 

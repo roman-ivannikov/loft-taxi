@@ -1,58 +1,37 @@
-import React from 'react';
-import Header from './components/Header';
-import { LoginPageWithAuth } from './components/LoginPage';
-import { RegistrationPage } from './components/RegistrationPage';
-import { MapPage } from './components/MapPage';
-import { ProfilePageWithAuth } from './components/ProfilePage';
-// import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useState } from 'react';
 import { withAuth } from './components/AuthContext';
+import { LoginPage } from './components/LoginPage';
+import { RegistrationPage } from './components/RegistrationPage';
+import { MapPage } from './components/MapPage'
+import { ProfilePage } from './components/ProfilePage';
+import { Header } from './components/Header';
 
-const pages = {
-  map: { name: 'Карта', component: (props) => <MapPage {...props} />, showInMenu: true, isPrivate: true },
-  profile: { name: 'Профиль', component: (props) => <ProfilePageWithAuth {...props} />, showInMenu: true, isPrivate: true },
-  login: { name: 'Войти', component: (props) => <LoginPageWithAuth {...props} />, showInMenu: true },
-  registration: { name: 'Регистрация', component: (props) => <RegistrationPage {...props} />, showInMenu: false }
+
+
+const PAGES = {
+  login: (props) => <LoginPage {...props}/>,
+  registration: (props) => <RegistrationPage {...props}/>,
+  map: (props) => <MapPage {...props}/>,
+  profile: (props) => <ProfilePage {...props}/>
 }
 
-const menuItems = [];
-for (let key in pages) {
-    if (pages[key].showInMenu !== false) {
-      menuItems.push({ 'page': key, 'text': pages[key].name } );
-    }
-};
 
-class AppClass extends React.Component {
-  state = { 
-    currentPage: 'login'
-  };
+const Main = () => {
 
-  goToPage = ( page ) => {
-    const isPrivatePage = pages[page].isPrivate ? true : false;
-    if ( (isPrivatePage && this.props.isLoggedIn) || (!isPrivatePage) ) {
-      this.setState({ currentPage: page })
-    } else {
-      this.setState({ currentPage: 'login' })
-    }
+  const [currentPage, setCurrentPage] = useState( 'login' );
 
-    // this.setState({ currentPage: page })
-  };
-
-  render() {
-    return (
-        <>
-          <Header 
-              menuItems={ menuItems }
-              currentPage={ this.state.currentPage }
-              goToPage={ this.goToPage }
-          />
-          <main>
-            <section>
-                { pages[this.state.currentPage].component({ goToPage: this.goToPage }) }
-            </section>
-          </main>
-        </>
-    )
+  const goToPage = ( page ) => {
+      setCurrentPage( page )
   }
+
+  return (
+      <>
+        <Header currentPage={ currentPage } goToPage={ goToPage }/>
+        <main>
+          { PAGES[currentPage]({ goToPage: goToPage }) }
+        </main>
+      </>
+  )
 }
 
-export const App =  withAuth(AppClass);
+export const App = withAuth(Main);

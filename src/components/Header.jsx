@@ -1,42 +1,54 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../logo.svg';
-import { NavItem } from './NavItems';
-import { withAuth } from "./AuthContext";
-import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
+import { AuthContext } from './AuthContext';
 
-const Header = ( props ) => (
-    <header className="header">
-        <div className="container">
-            <div className="header__wrap">
-                <img src={logo} className="header__logo" alt="logo" />
-                <NavWithAuth {...props}></NavWithAuth>
-            </div>
-        </div>
-    </header>
-);
+export const Header = ( { currentPage, goToPage } ) => {
+    
+    const { isLoggedIn, logOut } = useContext( AuthContext );
 
-const Nav = ({ menuItems, currentPage, goToPage }) => (
-    <nav className="header__nav nav">
-        {
-            menuItems.map( item => (
-                <NavItem
-                    key={ item.page }
-                    text={ item.text }
-                    page={ item.page }
-                    color={ item.page === currentPage ? "secondary" : "primary"}
-                    goToPage={ goToPage }
-                />
-            ))
-        }
-    </nav>
-);
+    const exit = () => {
+        logOut( goToPage( 'login' ) );
+    }
 
-Nav.propTypes = {
-    currentPage: PropTypes.string,
-    goToPage: PropTypes.func,
-    menuItems: PropTypes.array
-}
-
-const NavWithAuth = withAuth(Nav);
-
-export default Header;
+    const navigate = ( event ) => {
+        const href = event.target.dataset.href;
+        href && goToPage( href );
+    }
+  
+    return (
+        isLoggedIn ? 
+            <header className="header">
+                <div className="container">
+                    <div className="header__wrap">
+                        <img src={ logo } className="header__logo" alt="logo" />
+                        <nav className="header__nav nav">
+                            <Button
+                                className="nav__item"
+                                onClick={navigate}
+                                data-href="map"
+                                color={ currentPage === 'map' ? "secondary" : "primary" }
+                            >
+                                Карта
+                            </Button>
+                            <Button
+                                className="nav__item"
+                                onClick={navigate}
+                                data-href="profile"
+                                color={ currentPage === 'profile' ? "secondary" : "primary" }
+                            >
+                                Профиль
+                            </Button>
+                            <Button
+                                className="nav__item"
+                                onClick={ exit }
+                            >
+                                Выйти
+                            </Button>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+        : null
+    )
+  };
