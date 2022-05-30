@@ -70,5 +70,4 @@ export class RegistrationPage extends React.Component {
             </div>
         )
     } 
-
 }

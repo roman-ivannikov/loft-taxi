@@ -1,6 +1,3 @@
 import React from 'react';
 
-export const ProfilePage = () => {
-    return <p>Это ваш Профиль.</p>;
-    
-}
+export const ProfilePage = () => <p>Это ваш Профиль.</p>
