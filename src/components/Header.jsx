@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import logo from '../logo.svg';
 import Button from '@mui/material/Button';
-import { AuthContext } from './AuthContext';
+import AuthContext from './AuthContext';
 import { PropTypes } from 'prop-types';
 
 export const Header = ( { currentPage, goToPage } ) => {
