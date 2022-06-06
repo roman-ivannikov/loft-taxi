@@ -9,7 +9,8 @@ export const Header = ( { currentPage, goToPage } ) => {
     const { isLoggedIn, logOut } = useContext( AuthContext );
 
     const exit = () => {
-        logOut( goToPage( 'login' ) );
+        logOut();
+        goToPage( 'login' );
     }
 
     const navigate = ( event ) => {

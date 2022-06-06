@@ -16,8 +16,8 @@ const Login = ( { goToPage } ) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        logIn( authData, goToPage( 'profile' ) )
-        ;
+        logIn( authData );
+        goToPage( 'profile' );
     }
 
     return (
