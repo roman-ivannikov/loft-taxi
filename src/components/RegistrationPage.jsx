@@ -1,10 +1,7 @@
 import React from 'react';
 
-class RegistrationPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { userEmail: '', userName: '', userPassword: '' };
-    }
+export class RegistrationPage extends React.Component {
+    state = { userEmail: '', userName: '', userPassword: '' };
     
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
@@ -12,11 +9,11 @@ class RegistrationPage extends React.Component {
     
     handleSubmit = event => {
         event.preventDefault();
-        this.props.changePage('MapPage');
+        this.props.goToPage('login');
     }
 
-    handleOther = event => {
-        this.props.changePage('LoginPage');
+    handleLogin = () => {
+        this.props.goToPage('login');
     }
 
     render() {
@@ -31,12 +28,12 @@ class RegistrationPage extends React.Component {
                                 <label>
                                     Email*:
                                     <input
-                                    type="text"
+                                    type="email"
                                     value={userEmail}
                                     name="userEmail"
                                     onChange={this.handleChange}
                                     className="form__input"
-                                    autoComplete="username"
+                                    autoComplete="email"
                                     required
                                     />
                                 </label>
@@ -67,15 +64,10 @@ class RegistrationPage extends React.Component {
                             </div>
                             <input className="form__submit" type="submit" value="Зарегистрироваться" />
                         </form>
-                        <div className="form__other">Уже зарегистрированны? <button onClick={this.handleOther}>Войти</button></div>
+                        <div className="form__other">Уже зарегистрированны? <button onClick={this.handleLogin}>Войти</button></div>
                     </div>
                 </div>
             </div>
         )
     } 
-
 }
-
-
-export default RegistrationPage;
-

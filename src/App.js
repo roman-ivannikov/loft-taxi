@@ -1,51 +1,37 @@
-import React from 'react';
-import './App.css';
-import Header from './components/Header';
-import LoginPage from './components/LoginPage';
-import RegistrationPage from './components/RegistrationPage';
-import MapPage from './components/MapPage';
-import ProfilePage from './components/ProfilePage';
+import React, { useState } from 'react';
+import { withAuth } from './components/AuthContext';
+import { LoginPage } from './components/LoginPage';
+import { RegistrationPage } from './components/RegistrationPage';
+import { MapPage } from './components/MapPage'
+import { ProfilePage } from './components/ProfilePage';
+import { Header } from './components/Header';
 
-class App extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = { currentPage: 'MapPage' };
-    
-  }
-  
-  navItems = [
-    { text:'Карта', page:'MapPage' },
-    { text:'Профиль', page:'ProfilePage' },
-    { text:'Войти', page:'LoginPage' }
-  ];
 
-  changePage( newPage ) {
-    this.setState( { currentPage: newPage } );
-  }
 
-  showPage = () => {
-     switch (this.state.currentPage) {
-      case 'MapPage':
-        return <MapPage/>
-      case 'ProfilePage':
-        return <ProfilePage/>
-      case 'LoginPage':
-        return <LoginPage changePage={this.changePage.bind(this)} />
-      case 'RegistrationPage':
-          return <RegistrationPage changePage={this.changePage.bind(this)}/>
-      default:
-        return null
-    }
-  }
-
-  render() {
-    return (
-      <>
-        <Header navItems={this.navItems} currentPage={this.state.currentPage} changePage={this.changePage.bind(this)}/>
-        <this.showPage/>
-      </>
-    )
-  }
+const PAGES = {
+  login: (props) => <LoginPage {...props}/>,
+  registration: (props) => <RegistrationPage {...props}/>,
+  map: (props) => <MapPage {...props}/>,
+  profile: (props) => <ProfilePage {...props}/>
 }
 
-export default App;
+
+const Main = () => {
+
+  const [currentPage, setCurrentPage] = useState( 'login' );
+
+  const goToPage = ( page ) => {
+      setCurrentPage( page )
+  }
+
+  return (
+      <>
+        <Header currentPage={ currentPage } goToPage={ goToPage }/>
+        <main>
+          { PAGES[currentPage]({ goToPage: goToPage }) }
+        </main>
+      </>
+  )
+}
+
+export const App = withAuth(Main);
