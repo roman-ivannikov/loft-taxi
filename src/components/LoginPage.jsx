@@ -1,23 +1,23 @@
 import React, { useContext, useState } from 'react';
 import AuthContext, { withAuth } from './AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 
-const Login = ( { goToPage } ) => {
+const Login = () => {
     const [ authData, setAuthData ] = useState( { userEmail: '', userPassword: '' } );
 
     const { logIn } = useContext( AuthContext );
+
+    const history = useHistory();
 
     const handleChange = event => {
         const target = event.target;
         setAuthData( { ...authData, [target.name]: target.value })
     }
-    const handleGoToRegistartion = () => {
-        goToPage( 'registration' );
-    }
 
     const handleSubmit = event => {
         event.preventDefault();
-        logIn( authData, goToPage( 'profile' ) )
-        ;
+        logIn( authData );
+        history.push( "/profile" );
     }
 
     return (
@@ -55,7 +55,7 @@ const Login = ( { goToPage } ) => {
                         <div className="form__forgot">Забыли пароль?</div>
                         <input className="form__submit" type="submit" value="Войти" />
                     </form>
-                    <div className="form__other">Новый пользователь? <button onClick={handleGoToRegistartion}>Регистрация</button></div>
+                    <div className="form__other">Новый пользователь? <Link to="/registration">Регистрация</Link></div>
                 </div>
             </div>
         </div>

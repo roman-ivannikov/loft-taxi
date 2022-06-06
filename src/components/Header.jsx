@@ -3,19 +3,23 @@ import logo from '../logo.svg';
 import Button from '@mui/material/Button';
 import AuthContext from './AuthContext';
 import { PropTypes } from 'prop-types';
+import { useLocation, useHistory } from 'react-router-dom'
 
-export const Header = ( { currentPage, goToPage } ) => {
+export const Header = () => {
     
     const { isLoggedIn, logOut } = useContext( AuthContext );
 
-    const exit = () => {
-        logOut( goToPage( 'login' ) );
-    }
+    const location = useLocation();
+    const history = useHistory();
 
     const navigate = ( event ) => {
         const href = event.target.dataset.href;
-        href && goToPage( href );
+        href && history.push("/" + href);
     }
+
+    const getColor = ( path ) => {
+        return ("/" + path) === location.pathname ? "secondary" : "primary";
+    } 
   
     return (
         isLoggedIn ? 
@@ -28,7 +32,7 @@ export const Header = ( { currentPage, goToPage } ) => {
                                 className="nav__item"
                                 onClick={navigate}
                                 data-href="map"
-                                color={ currentPage === 'map' ? "secondary" : "primary" }
+                                color={ getColor('map') }
                             >
                                 Карта
                             </Button>
@@ -36,13 +40,13 @@ export const Header = ( { currentPage, goToPage } ) => {
                                 className="nav__item"
                                 onClick={navigate}
                                 data-href="profile"
-                                color={ currentPage === 'profile' ? "secondary" : "primary" }
+                                color={ getColor('profile') }
                             >
                                 Профиль
                             </Button>
                             <Button
                                 className="nav__item"
-                                onClick={ exit }
+                                onClick={ () => logOut() }
                             >
                                 Выйти
                             </Button>

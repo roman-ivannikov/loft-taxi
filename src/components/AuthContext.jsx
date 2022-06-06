@@ -1,18 +1,18 @@
 import React from 'react';
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
     const [ isLoggedIn, setIsLoggedIn ] = React.useState(false);
 
-    const logIn = (email, password, cb) => {
-        setIsLoggedIn(true, cb);
+    const logIn = (email, password ) => {
+        setIsLoggedIn(true);
     }
 
-    const logOut = ( cb ) => {
-        setIsLoggedIn(false, cb);
+    const logOut = () => {
+        setIsLoggedIn(false);
     }
 
     return (

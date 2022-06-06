@@ -10,6 +10,13 @@ body {
   font-style: normal;
 }
 
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
 button,
 .form__submit {
   padding: 0;
@@ -142,8 +149,13 @@ button,
   text-align: center;
 }
 
-.form__other > button {
+.form__other > a {
   color: #FDBF5A;
+  text-decoration: none;
+}
+
+.form__other > a:hover {
+  text-decoration: underline;
 }
 
 .map-wrapper {

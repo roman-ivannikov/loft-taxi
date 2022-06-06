@@ -1,19 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export class RegistrationPage extends React.Component {
     state = { userEmail: '', userName: '', userPassword: '' };
-    
+
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
     
     handleSubmit = event => {
         event.preventDefault();
-        this.props.goToPage('login');
-    }
-
-    handleLogin = () => {
-        this.props.goToPage('login');
+        this.props.history.push("/login");
     }
 
     render() {
@@ -64,7 +61,7 @@ export class RegistrationPage extends React.Component {
                             </div>
                             <input className="form__submit" type="submit" value="Зарегистрироваться" />
                         </form>
-                        <div className="form__other">Уже зарегистрированны? <button onClick={this.handleLogin}>Войти</button></div>
+                        <div className="form__other">Уже зарегистрированны? <Link to="/login">Войти</Link></div>
                     </div>
                 </div>
             </div>
